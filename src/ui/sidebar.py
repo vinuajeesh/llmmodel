@@ -33,7 +33,11 @@ class Sidebar(ctk.CTkFrame):
         self.grid_rowconfigure(3, weight=1)
 
     def _load_model_handler(self):
-        path = self.model_path_entry.get()
+        path = self.model_path_entry.get().strip()
+        # Remove quotes if user copied as path
+        if path.startswith('"') and path.endswith('"'):
+            path = path[1:-1]
+
         if path:
             self.on_model_load(path)
 

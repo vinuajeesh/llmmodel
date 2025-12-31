@@ -95,8 +95,15 @@ class MainWindow(ctk.CTk):
         # Run in thread to not freeze UI
         def _load():
             success, msg = self.controller.load_model(path)
-            self.sidebar.load_btn.configure(text="Loaded" if success else "Error")
-            print(msg)
+            # Update UI safely
+            def _update():
+                self.sidebar.load_btn.configure(text="Loaded" if success else "Error")
+                if not success:
+                    from tkinter import messagebox
+                    messagebox.showerror("Model Load Error", f"Failed to load model:\n{msg}")
+
+            self.after(0, _update)
+            print(f"Model Load: {success} - {msg}")
 
         self.sidebar.load_btn.configure(text="Loading...")
         threading.Thread(target=_load, daemon=True).start()
