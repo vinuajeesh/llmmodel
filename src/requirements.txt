@@ -1,8 +1,0 @@
-customtkinter
-llama-cpp-python
-duckduckgo-search
-Pillow
-mss
-psutil
-scikit-learn
-numpy
