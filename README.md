@@ -1,88 +1,57 @@
-Complete Windows GGUF Chatbot Application - Development Brief
-PROJECT OVERVIEW
-Build a production-grade desktop application for Windows that runs local GGUF language models with a modern, polished UI comparable to ChatGPT, Claude Desktop, or Copilot. The application must be robust, user-friendly, and require minimal technical knowledge to operate.
+# Local AI Desktop Assistant
 
-CORE REQUIREMENTS
-1. Technology Stack
-Backend:
+A Python-based desktop application for running local GGUF AI models with advanced system integration capabilities. Built with CustomTkinter and Llama-cpp-python.
 
-FastAPI (Python 3.12+) with async support
+## Features
 
-llama-cpp-python for GGUF model loading
+- **Local AI**: Runs GGUF models locally (no internet required for the AI itself).
+- **Memory**: Remembers conversation history and allows you to "inject" long-term memories (e.g., "Remember that I am a developer").
+- **Tools**:
+    - **Web Search**: Can search the web using DuckDuckGo.
+    - **Screen View**: Can take a screenshot of your primary monitor (context only).
+    - **Network Scan**: Lists local network interfaces and IPs.
+    - **CMD Execution**: Can run shell commands (Optional/Risky toggle).
+    - **Reminders**: Set natural language reminders (e.g., "Remind me to check logs in 5 minutes").
 
-duckduckgo-search for web search (v3.8.5+)
+## Prerequisites
 
-SQLite database for persistent storage
+- **Python 3.10+** installed.
+- **C++ Compiler**:
+    - **Windows**: Visual Studio Community with "Desktop development with C++".
+    - **Linux**: `build-essential` or equivalent (`gcc`, `g++`).
+    - **Mac**: Xcode Command Line Tools.
+    - *Note: This is required to compile `llama-cpp-python`.*
 
-uvicorn as ASGI server
+## Installation
 
-Frontend:
+1.  Clone the repository.
+2.  Install dependencies:
 
-React 18+ with TypeScript
+    ```bash
+    pip install -r src/requirements.txt
+    ```
 
-Electron for Windows desktop app
+    *Note: If you have a supported GPU (NVIDIA/AMD), follow the [llama-cpp-python installation guide](https://github.com/abetlen/llama-cpp-python) to enable hardware acceleration (e.g., `CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python`).*
 
-TailwindCSS + shadcn/ui for UI components
+## How to Run
 
-Zustand for state management
+1.  **Download a Model**:
+    - Download a `.gguf` model file from HuggingFace (e.g., [Mistral-7B-Instruct-v0.3-GGUF](https://huggingface.co/maziyarpanahi/Mistral-7B-Instruct-v0.3-GGUF)).
+    - Save it anywhere on your computer.
 
-TanStack Query for data fetching
+2.  **Start the App**:
 
-Lucide icons for modern iconography
+    ```bash
+    python main.py
+    ```
 
-Packaging:
+3.  **Using the App**:
+    - Click **Load Model** in the sidebar and paste the full path to your `.gguf` file.
+    - Wait for the "Loaded" indicator.
+    - Start chatting!
+    - Toggle tools (Web, CMD, Screen, Network) using the switches below the chat bar.
 
-electron-builder for Windows exe distribution
+## Tools Usage
 
-auto-updater for seamless updates
-
-Architecture:
-
-Backend runs in child process from Electron
-
-IPC communication between frontend and backend
-
-Single-file distribution (.exe installer)
-
-UI/UX REQUIREMENTS
-Desktop Application Interface
-Design System:
-
-Follow modern design patterns (ChatGPT, Claude Desktop, Copilot)
-
-Dark mode default with light mode toggle
-
-Smooth animations and transitions
-
-Responsive sidebar layout
-
-Professional color palette (blues, purples, grays)
-
-Key Screens:
-
-1. Main Chat Interface
-Large message display area with user/assistant distinction
-
-Real-time message streaming with typing indicators
-
-Clear timestamp and model info for each message
-
-Copy message button for each response
-
-Delete/edit message history
-
-Search through chat history
-
-Export conversation as PDF/Markdown
-
-2. Model Management Screen
-Model browser/selector (display available GGUF models)
-
-Drag-and-drop model upload area
-
-Model details (file size, parameters, format)
-
-Loading progress with visual indicator
-
-Model swit
-
+- **Reminders**: Type "Remind me to [task] in [X] [seconds/minutes/hours]".
+- **CMD**: Enable the "CMD (Risky)" toggle. Type "Run cmd [command]".
